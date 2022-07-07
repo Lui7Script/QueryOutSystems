@@ -1,0 +1,37 @@
+chamadoID
+PesquisaPorDataID
+PesquisaPorDataEncerramento
+UsuarioSolicitanteId
+PessoaId
+DescricaoChamado
+ChamadoSetorIDChamadosFinalizado
+FiliaisTmsFinalizados
+EmpresaID
+
+
+SELECT {CHAMADO}.[ID], {USUARIOS_INTERNOS}.[EMAIL], {CHAMADO}.[DATA_SOLICITACAO], {CHAMADO}.[DATA_ENCERRAMENTO], {CHAMADO}.[DESCRICAO_SOLICITACAO], {CHAMADO_SETOR}.[DESCRICAO_SETOR], {EMPRESA}.[RAZAO_SOCIAL]
+
+FROM {CHAMADO}
+
+JOIN {USUARIOS_INTERNOS} WITH (NOLOCK) ON {CHAMADO}.[HANDLE_USUARIOINTERNOS_SOLICITANTE] = {USUARIOS_INTERNOS}.[HANDLE]
+JOIN {CHAMADO_SETOR} WITH (NOLOCK) ON {CHAMADO}.[ID_CHAMADO_SETOR] = {CHAMADO_SETOR}.[ID]
+LEFT JOIN {EMPRESA} WITH (NOLOCK) ON  {CHAMADO_SETOR}.[ID_EMPRESA] = {EMPRESA}.[ID]
+
+WHERE
+({CHAMADO}.[DATA_ENCERRAMENTO] <> '1900/01/01') AND
+
+
+@PesquisaPorData AND @PesquisaPorDataEncerramento AND
+
+
+(({CHAMADO}.[HANDLE_USUARIOINTERNOS_SOLICITANTE] = @usuarioSolicitanteID) OR (@usuarioSolicitanteID IS NULL) OR (@usuarioSolicitanteID = '')) AND
+(({CHAMADO}.[ID_PESSOA] = @PessoaID) OR (@PessoaID IS NULL) OR (@PessoaID = '') ) AND
+(({CHAMADO}.[ID_CHAMADO_SETOR] = @ChamadoSetorIDChamadosFinalizado) OR (@ChamadoSetorIDChamadosFinalizado IS NULL) OR (@ChamadoSetorIDChamadosFinalizado='')) AND
+(({CHAMADO}.[HANDLE_FILIAL_RESP]=@FIliaisTmsChamadosFinalizados) OR (@FIliaisTmsChamadosFinalizados IS NULL) OR (@FIliaisTmsChamadosFinalizados='')) AND
+{CHAMADO}.[DESCRICAO_SOLICITACAO] LIKE '%' + @DescricaoChamado + '%' AND
+(({CHAMADO_SETOR}.[ID_EMPRESA] =@EmpresaID2) OR (@EmpresaID2 IS NULL) OR (@EmpresaID2 = '')) AND
+{CHAMADO}.[ID] LIKE '%' + @ChamadoID + '%'
+
+
+ORDER BY {CHAMADO}.[DATA_ENCERRAMENTO] DESC
+

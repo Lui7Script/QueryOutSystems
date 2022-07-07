@@ -1,0 +1,27 @@
+ChamadoID
+PesquisaPorData
+UsuarioSOlicitanteID
+PessoaID
+DescriçãoChamado
+EmpresaID
+
+SELECT COUNT({CHAMADO}.[ID]) AS TOTALCHAMADOS
+FROM {CHAMADO}
+
+JOIN {CHAMADO_SETOR} WITH (NOLOCK) ON {CHAMADO}.[ID_CHAMADO_SETOR] = {CHAMADO_SETOR}.[ID]
+LEFT JOIN {EMPRESA} WITH (NOLOCK) ON {CHAMADO_SETOR}.[ID_EMPRESA] = {EMPRESA}.[ID]
+
+WHERE
+@PesquiaPorData AND 
+(({CHAMADO}.[HANDLE_USUARIOINTERNOS_SOLICITANTE] = @UsuarioSolicitanteId) OR (@UsuarioSolicitanteId IS NULL) OR (@UsuarioSolicitanteId = '' )) AND
+(({CHAMADO}.[ID_PESSOA] = @PessoaId) OR (@PessoaId IS NULL) OR (@PessoaId = '') ) AND
+{CHAMADO}.[DESCRICAO_SOLICITACAO] LIKE '%' + @DescricaoChamado + '%'  AND
+({CHAMADO}.[DATA_ENCERRAMENTO] IS NULL OR {CHAMADO}.[DATA_ENCERRAMENTO] = '1900/01/01') AND
+(({CHAMADO_SETOR}.[ID_EMPRESA] = @EmpresaID) OR (@EmpresaID IS NULL) OR (@EmpresaID= '')) AND
+
+{CHAMADO}.[ID] LIKE '%' + @chamadoID + '%'
+
+
+
+
+
