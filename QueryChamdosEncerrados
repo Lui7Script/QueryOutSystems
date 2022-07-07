@@ -1,12 +1,12 @@
-chamadoID
-PesquisaPorDataID
-PesquisaPorDataEncerramento
-UsuarioSolicitanteId
-PessoaId
-DescricaoChamado
-ChamadoSetorIDChamadosFinalizado
-FiliaisTmsFinalizados
-EmpresaID
+"chamadoID
+ PesquisaPorDataID
+ PesquisaPorDataEncerramento
+ UsuarioSolicitanteId
+ PessoaId
+ DescricaoChamado
+ ChamadoSetorIDChamadosFinalizado
+ FiliaisTmsFinalizados
+ EmpresaID"
 
 
 SELECT {CHAMADO}.[ID], {USUARIOS_INTERNOS}.[EMAIL], {CHAMADO}.[DATA_SOLICITACAO], {CHAMADO}.[DATA_ENCERRAMENTO], {CHAMADO}.[DESCRICAO_SOLICITACAO], {CHAMADO_SETOR}.[DESCRICAO_SETOR], {EMPRESA}.[RAZAO_SOCIAL]

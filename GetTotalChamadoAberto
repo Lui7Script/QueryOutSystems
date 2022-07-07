@@ -1,9 +1,9 @@
-ChamadoID
+"ChamadoID
 PesquisaPorData
 UsuarioSOlicitanteID
 PessoaID
 DescriçãoChamado
-EmpresaID
+EmpresaID"
 
 SELECT COUNT({CHAMADO}.[ID]) AS TOTALCHAMADOS
 FROM {CHAMADO}
